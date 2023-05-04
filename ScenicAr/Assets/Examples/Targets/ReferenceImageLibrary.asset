@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 848409ee8ba454f42a5ddff137688a27, type: 3}
+  m_Name: ReferenceImageLibrary
+  m_EditorClassIdentifier: 
+  m_GuidLow: 4816108788330486751
+  m_GuidHigh: 15250545252062814363
+  m_DataStore:
+    m_Storage: []
+  m_Images:
+  - m_SerializedGuid:
+      m_GuidLow: 4928591058939677923
+      m_GuidHigh: 8286450648572537483
+    m_SerializedTextureGuid:
+      m_GuidLow: 16601546049526754931
+      m_GuidHigh: 6713597729540623514
+    m_Size: {x: 0.06, y: 0.05034375}
+    m_SpecifySize: 1
+    m_Name: nord_target
+    m_Texture: {fileID: 0}
+  - m_SerializedGuid:
+      m_GuidLow: 4959824347577288775
+      m_GuidHigh: 9509501136219293832
+    m_SerializedTextureGuid:
+      m_GuidLow: 4779514698271009894
+      m_GuidHigh: 10621823583033525000
+    m_Size: {x: 0.15, y: 0.099750005}
+    m_SpecifySize: 1
+    m_Name: nord_big_target
+    m_Texture: {fileID: 0}
