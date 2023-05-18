@@ -10,7 +10,7 @@ public class PlayingFieldManager : MonoBehaviour
 
     private void Update()
     {
-        quad.position = flags[0].position;
+        rotationPivot.position = flags[0].position;
         rotationPivot.rotation = Quaternion.LookRotation(flags[1].position - flags[0].position, Vector3.up);
 
         Vector3 scale = Vector3.zero;
@@ -20,6 +20,9 @@ public class PlayingFieldManager : MonoBehaviour
         scale.x = Vector3.Distance(flags[0].position, flags[2].position);
 
         quad.localScale = scale;
+
+        rotationPivot.position += (flags[1].position - flags[0].position);
+        rotationPivot.position -= (flags[1].position - flags[2].position) / 2;
     }
 
 

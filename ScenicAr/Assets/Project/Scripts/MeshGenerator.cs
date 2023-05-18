@@ -2,45 +2,92 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeshGenerator : MonoBehaviour
+public static class MeshGenerator
 {
-    public Texture2D heightmap;
-    public MeshFilter meshFilter;
-
-
-
-    public void GenerateMeshFromHeightMap()
+    public static float[,] GenerateHeightMapFromTexture(Texture2D heightMapAsImage)
     {
-        float height = heightmap.height;
-        float width = heightmap.width;
+        Color[] colors = heightMapAsImage.GetPixels();
+        int width = heightMapAsImage.width;
+        int height = heightMapAsImage.height;
 
-        Mesh mesh = new Mesh();
-
-        Color[] colorArray = heightmap.GetPixels();
-
-        Vector3[] verticies = new Vector3[(int)(height * width)];
+        float[,] map = new float[width, height];
 
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                int iterator = (int)(y * width) + x;
-                verticies[iterator].y = colorArray[(int)((x * y) + width)].grayscale;
-                verticies[iterator].x = x / width;
-                verticies[iterator].y = y / height;
+                map[x, y] = colors[(y * width) + x].grayscale;
             }
         }
 
-        mesh.vertices = verticies;
+        return map;
+    }
 
-        int[] triangles = new int[(int)width * 6];
-        for (int ti = 0, vi = 0, x = 0; x < width; x++, ti += 6, vi++)
+
+    public static MeshData GenerateMeshFromHeightMap(float[,] heightMap, float heightMultiplier = 1)
+    {
+        int width = heightMap.GetLength(0);
+        int height = heightMap.GetLength(1);
+        float topLeftX = (width - 1) / -2f;
+        float topLeftZ = (height - 1) / 2f;
+
+        MeshData meshData = new MeshData(width, height);
+        int vertexIndex = 0;
+
+        for (int y = 0; y < height; y++)
         {
-            triangles[ti] = vi;
-            triangles[ti + 3] = triangles[ti + 2] = vi + 1;
-            triangles[ti + 4] = triangles[ti + 1] = vi + width + 1;
-            triangles[ti + 5] = vi + width + 2;
+            for (int x = 0; x < width; x++)
+            {
+                meshData.verticies[vertexIndex] = new Vector3((topLeftX + x) / width, heightMap[x, y] * heightMultiplier, (topLeftZ - y) / height);
+
+                meshData.uvs[vertexIndex] = new Vector2(x / (float)width, y / (float)height);
+
+                if (x < width - 1 && y < height - 1)
+                {
+                    meshData.AddTriangle(vertexIndex, vertexIndex + width + 1, vertexIndex + width);
+                    meshData.AddTriangle(vertexIndex + width + 1, vertexIndex, vertexIndex + 1);
+                }
+
+
+                vertexIndex++;
+            }
         }
+        return meshData;
+    }
+
+}
+
+public class MeshData
+{
+    public Vector3[] verticies;
+    public int[] triangles;
+    public Vector2[] uvs;
+
+    int triangleIndex;
+
+    public MeshData(int meshWidth, int meshHeight)
+    {
+        verticies = new Vector3[meshWidth * meshHeight];
+        triangles = new int[(meshWidth - 1) * (meshHeight - 1) * 6];
+        uvs = new Vector2[meshWidth * meshHeight];
+    }
+
+    public void AddTriangle(int a, int b, int c)
+    {
+        triangles[triangleIndex] = a;
+        triangles[triangleIndex+1] = b;
+        triangles[triangleIndex+2] = c;
+        triangleIndex += 3;
+    }
+
+    public Mesh CreateMesh()
+    {
+        Mesh mesh = new Mesh();
+        mesh.vertices = verticies;
+        mesh.triangles = triangles;
+        mesh.uv = uvs;
+        mesh.RecalculateNormals();
+        return mesh;
     }
 
 }

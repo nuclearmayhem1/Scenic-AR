@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QCARConfig>
   <Tracking>
+    <ImageTarget name="AR_Project_CornerTarget4" size="0.100000 0.100000" />
+    <ImageTarget name="AR_Project_CornerTarget3" size="0.100000 0.100000" />
+    <ImageTarget name="AR_Project_CornerTarget2" size="0.100000 0.100000" />
+    <ImageTarget name="AR_Project_CornerTarget1" size="0.100000 0.100000" />
     <ImageTarget name="AR_Project_ImageTargetProto_Forest" size="0.100000 0.100499" />
     <ImageTarget name="AR_Project_ImageTargetProto_Desert" size="0.100000 0.099496" />
     <ImageTarget name="AR_Project_ImageTargetProto_Lake" size="0.100000 0.099496" />
