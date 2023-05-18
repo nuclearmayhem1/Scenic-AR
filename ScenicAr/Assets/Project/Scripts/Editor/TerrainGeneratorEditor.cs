@@ -13,21 +13,27 @@ public class TerrainGeneratorEditor : Editor
         
         TerrainGenerator terrainGenerator = (TerrainGenerator)target;
 
+        GUILayout.BeginHorizontal();
+        GUI.DrawTexture(GUILayoutUtility.GetRect(100, 100, GUILayout.ExpandWidth(false)), terrainGenerator.noisemapPreview);
+        GUI.DrawTexture(GUILayoutUtility.GetRect(100, 100, GUILayout.ExpandWidth(false)), terrainGenerator.colormap);
+        GUILayout.EndHorizontal();
 
-        GUI.DrawTexture(GUILayoutUtility.GetRect(100, 100, GUILayout.ExpandWidth(false)), terrainGenerator.noiseMapPreview);
-
+        GUILayout.BeginHorizontal();
         if (GUILayout.Button("Generate Noisemap") == true)
         {
             terrainGenerator.GenerateNoisemap();
         }
 
-
+        if (GUILayout.Button("Generate Colormap") == true)
+        {
+            terrainGenerator.GenerateColormap();
+        }
 
         if (GUILayout.Button("Generate Mesh") == true)
         {
             terrainGenerator.GenerateMesh();
         }
-
+        GUILayout.EndHorizontal();
     }
 
 }
